@@ -135,7 +135,7 @@ int main(void)
     printf("\x1b[2J\x1b[;H");
     printf("\r\nClass-B Safety Test: SPI Loopback\r\n");
 
-#if defined (CYBSP_SMARTIO_UART_LOOPBACK_HW)
+#if defined (CYBSP_SMARTIO_SPI_LOOPBACK_HW)
     /* Configure the Smart I/O block 2 */
     if(CY_SMARTIO_SUCCESS != Cy_SmartIO_Init(CYBSP_SMARTIO_SPI_LOOPBACK_HW, &CYBSP_SMARTIO_SPI_LOOPBACK_config))
     {
@@ -150,7 +150,7 @@ int main(void)
     /* Init SPI SelfTest*/
     SelfTest_SPI_SCB_Init();
 
-#if defined (CYBSP_SMARTIO_UART_LOOPBACK_HW)
+#if defined (CYBSP_SMARTIO_SPI_LOOPBACK_HW)
     cy_en_smartio_status_t smart_res;
     /* Bypass all the SmartIO configuration for normal mode */
     Cy_SmartIO_Disable(CYBSP_SMARTIO_SPI_LOOPBACK_HW);
@@ -175,7 +175,7 @@ int main(void)
          * clear the TX and RX FIFOs, and the reset the context status*/
         Cy_SCB_SPI_AbortTransfer(CYBSP_DUT_SPI_HW, &CYBSP_DUT_SPI_context);
 
-#if defined (CYBSP_SMARTIO_UART_LOOPBACK_HW)
+#if defined (CYBSP_SMARTIO_SPI_LOOPBACK_HW)
         cy_en_smartio_status_t smart_res;
         /* Turn on loopback by disabling the bypass on all the SmartIO configuration for test mode */
         Cy_SmartIO_Disable(CYBSP_SMARTIO_SPI_LOOPBACK_HW);
@@ -198,7 +198,6 @@ int main(void)
         ret = SelfTest_SPI_SCB(CYBSP_DUT_SPI_HW);
 
 #if defined (CYBSP_SMARTIO_UART_LOOPBACK_HW)
-        cy_en_smartio_status_t smart_res;
         /* Turn off loopback by enabling the bypass on all the SmartIO configuration for normal mode */
         Cy_SmartIO_Disable(CYBSP_SMARTIO_SPI_LOOPBACK_HW);
         smart_res = Cy_SmartIO_SetChBypass(CYBSP_SMARTIO_SPI_LOOPBACK_HW, CY_SMARTIO_CHANNEL_ALL);
